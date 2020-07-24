@@ -1,0 +1,27 @@
+import tweepy
+import time
+
+auth = tweepy.OAuthHandler('sx8B0JLc1HMXyQO5KFW0EWd9E','CYkVeX8ViE3eso9N5ZplQ9CDh30N249mxiWAuvGne0IjNbyVHz')
+auth.set_access_token('1286224499625648130-SYplmTAQjv4nQz9qIKpsbxJvZrbLvX','usf1ehCBJpO18wa0WIFiqeJGUzjzoz4H7ZKSbCR9xYmgl')
+
+api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+user = api.me()
+
+search = '#Eat'   #-----keyword to be searched and liked
+
+nrTweets = 500
+
+for tweet in tweepy.Cursor(api.search,search).items(nrTweets):
+    try:
+        print('Tweet Liked')   #------------likes tweet with keyword (#Eat)
+        tweet.favorite()
+        time.sleep(10)
+       #----To RETWEET---------
+       #print('Tweet Retweeted')
+       #tweet.retweet()
+       #time.sleep(10)
+       #-----------------------
+    except tweepy.TweepError as e:  #------Prints reason incase of error
+        print(e.reason)
+    except StopIteration:
+        break
